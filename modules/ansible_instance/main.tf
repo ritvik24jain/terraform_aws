@@ -22,7 +22,7 @@ resource "aws_instance" "ansible" {
   tags = {
     Name = "Ansible Server"
   }
-  key_name = "ad"
+  key_name = aws_key_pair.ansible.key_name
 }
 
 resource "aws_security_group" "allow_all_traffic" {

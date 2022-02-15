@@ -1,2 +1,9 @@
-pubkey =
-ansible_ami_id = 
+pubkey=""
+ansible_ami_id = ""
+vpc_cidr = "10.0.0.0/24"
+private_subnet_cidrs=["10.0.0.0/27", "10.0.0.32/27"]
+public_subnet_cidrs=["10.0.0.64/27", "10.0.0.96/27"]
+vpc_name="customvpc"
+region = "us-east-1"
+ansible_instance_type="t2.micro"
+configurable_instance_ami_id =""
