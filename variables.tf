@@ -28,16 +28,36 @@ variable "ansible_instance_type" {
   type = string
   default = "t2.micro"
 }
-variable "configurable_instance_ami_id" {
+variable "managednodes_ami_id" {
   type = string 
   default = ""
 }
 
-variable "configurable_instance_type" {
+variable "managednodes_instance_type" {
   type = string
  default = "t2.micro"
 }
 
 variable "pubkey" {
   type= string
+}
+
+variable "managed_modes_count" {
+  type = string
+}
+
+variable "lb_name" {
+  type = string
+}
+
+variable "isInternal" {
+  type = bool
+}
+
+variable "lb_type" {
+  type = string
+}
+
+variable "bucket_name" {
+  type = string
 }

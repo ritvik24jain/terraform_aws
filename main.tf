@@ -17,11 +17,29 @@ module "ansible_instance_creation" {
 
 }
 
-# module "configurable_instance" {
-#   source = "./modules/create_instance"
-#    vpc_id = modules.aws_vpc_create.vpc_id
-#    private_subnet_id = modules.aws_vpc_create.private_subnet_id
-#    configurable_instance_ami_id = var.configurable_instance_ami_id
-#    configurable_instance_type = var.configurable_instance_type
-#    ansible_security_group_id = modules.ansible_instance_creation.ansible_security_group_id
-# }
+module "configurable_instance" {
+  source = "./modules/web_configurable_instance"
+   vpc_id = module.aws_vpc_create.vpc_id
+   subnet_ids = module.aws_vpc_create.private_subnet_id
+   managednodes_ami_id = var.managednodes_ami_id
+   managednodes_instance_type = var.managednodes_instance_type
+   ansible_security_group_id = module.ansible_instance_creation.ansible_security_group_id
+   pubkey = var.pubkey
+   lb_sg_id = module.aws_frontend_lb.lb_security_group_id
+}
+
+module "aws_frontend_lb" {
+  source = "./modules/loadbalancer"
+  lb_name= var.lb_name
+  lb_type = var.lb_type
+  isInternal= var.isInternal
+  subnet_ids =module.aws_vpc_create.public_subnet_id
+  bucket_name = module.lb_access_logs.bucket_id
+ vpc_id = module.aws_vpc_create.vpc_id
+}
+
+module "lb_access_logs" {
+  source = "./modules/s3_bucket"
+  bucket_name= var.bucket_name
+  region = var.region
+}
